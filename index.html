@@ -253,19 +253,38 @@
             color: #00bfff;
         }
 
-        /* Contenedor del reproductor de YouTube */
-        .youtube-player-container {
+        /* Contenedor del enlace de En Vivo */
+        .en-vivo-link-container {
             width: 100%;
-            max-height: 500px; /* Ajusta la altura si es necesario */
-            overflow: hidden;
+            padding: 30px;
             margin-bottom: 40px;
             border-bottom: 2px solid #444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .youtube-player-container iframe {
-            display: block;
-            width: 100%;
-            height: 100%;
+        .en-vivo-link {
+            background-color: #ff0000; /* Rojo llamativo */
+            color: #fff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: pulsar 1.5s infinite alternate;
+        }
+
+        @keyframes pulsar {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
         }
 
         /* Cronograma de Próximos En Vivos */
@@ -382,7 +401,18 @@
                 margin-bottom: 15px;
             }
 
+            .en-vivo-link-container {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .en-vivo-link {
+                font-size: 1.2rem;
+                padding: 15px 30px;
+            }
+
             .youtube-player-container {
+                display: none; /* Ocultamos el contenedor del reproductor */
                 max-height: 350px;
                 margin-bottom: 20px;
             }
@@ -395,17 +425,7 @@
                 font-size: 0.9rem;
             }
 
-            .live-info-container #hora-actual {
-                font-size: 1.1rem;
-            }
-
-            .cronograma-envivos-container {
-                padding: 15px;
-                margin-bottom: 20px;
-            }
-
-            .cronograma-envivos-container h2 {
-                font-size: 1.8rem;
+            .live-info-container #hora-actual1.8rem;
                 margin-bottom: 10px;
             }
 
@@ -456,10 +476,23 @@
 
             .video-header {
                 max-height: 250px;
+                margin-bottom: 15px;
+            }
+
+            .en-vivo-link-container {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .en-vivo-link {
+                font-size: 1rem;
+                padding: 10px 20px;
             }
 
             .youtube-player-container {
+                display: none; /* Ocultamos el contenedor del reproductor */
                 max-height: 250px;
+                margin-bottom: 15px;
             }
 
             .live-info-container p {
@@ -521,14 +554,8 @@
             <p id="proximo-envivo-info"></p>
         </div>
 
-        <div class="youtube-player-container">
-            <iframe id="youtube-embed"
-                        width="100%"
-                        height="100%"
-                        src="https://www.youtube.com/watch?v=Ifp9JBcHwjA" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; live"
-                        allowfullscreen>
-            </iframe>
+        <div class="en-vivo-link-container" id="enVivoLinkContainer" style="display: none;">
+            <a href="https://www.youtube.com/watch?v=hct5qjC_n9M" class="en-vivo-link">🔴 ¡MIRA EL EN VIVO AQUÍ! 🔴</a>
         </div>
 
         <div class="cronograma-envivos-container">
@@ -594,6 +621,28 @@
                 duracion: "1h 00m",
                 link: "#"
             },
+            // Nuevos eventos para el 22/05/2025 a las 8:30 PM
+            {
+                titulo: "Estrenos de Películas: Acción",
+                fecha: "2025-05-22",
+                hora: "20:30",
+                duracion: "2h 30m",
+                link: "#"
+            },
+            {
+                titulo: "Estrenos de Películas: Comedia",
+                fecha: "2025-05-22",
+                hora: "20:30",
+                duracion: "2h 00m",
+                link: "#"
+            },
+            {
+                titulo: "Estrenos de Películas: Ciencia Ficción",
+                fecha: "2025-05-22",
+                hora: "20:30",
+                duracion: "2h 15m",
+                link: "#"
+            },
         ];
 
         function mostrarHoraAmPm(hora24) {
@@ -630,9 +679,7 @@
             const horas = String(ahora.getHours()).padStart(2, '0');
             const minutos = String(ahora.getMinutes()).padStart(2, '0');
             document.getElementById('hora-actual').textContent = mostrarHoraAmPm(`${horas}:${minutos}`);
-        }
-
-        function mostrarProximoEnVivoInfo(proximoEnVivo) {
+        }function mostrarProximoEnVivoInfo(proximoEnVivo) {
             const proximoEnVivoInfoElement = document.getElementById('proximo-envivo-info');
             if (proximoEnVivo) {
                 proximoEnVivoInfoElement.textContent = `Próximo en vivo: ${proximoEnVivo.titulo} - ${formatearFecha(proximoEnVivo.fecha)} ${mostrarHoraAmPm(proximoEnVivo.hora)}`;
@@ -644,6 +691,11 @@
         function mostrarProximosEnVivos(envivos) {
             const listaEnVivos = document.getElementById('proximos-envivos-list');
             listaEnVivos.innerHTML = '';
+            const enVivoLinkContainer = document.getElementById('enVivoLinkContainer');
+            const enVivoLinkURL = "https://www.youtube.com/watch?v=hct5qjC_n9M"; // Nuevo enlace del en vivo
+
+            // Actualizar el href del enlace del en vivo
+            enVivoLinkContainer.querySelector('.en-vivo-link').href = enVivoLinkURL;
 
             const ahora = new Date();
             const diaActual = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`;
@@ -673,19 +725,8 @@
                 return a.hora.localeCompare(b.hora);
             });
 
-            // Mostrar título de "EN VIVO" si hay un evento actual
-            const youtubePlayerContainer = document.querySelector('.youtube-player-container');
-            const enVivoTitulo = document.getElementById('en-vivo-titulo');
             if (enVivoAhora) {
-                if (!enVivoTitulo) {
-                    const h2EnVivo = document.createElement('h2');
-                    h2EnVivo.textContent = '🔴 EN VIVO';
-                    h2EnVivo.style.color = '#ff0000';
-                    h2EnVivo.style.textAlign = 'center';
-                    h2EnVivo.style.marginBottom = '20px';
-                    h2EnVivo.id = 'en-vivo-titulo';
-                    youtubePlayerContainer.parentNode.insertBefore(h2EnVivo, youtubePlayerContainer);
-                }
+                enVivoLinkContainer.style.display = 'flex'; // Mostrar el enlace del en vivo
                 const envivoDiv = document.createElement('div');
                 envivoDiv.classList.add('envivo-item');
                 envivoDiv.innerHTML = `
@@ -701,7 +742,7 @@
                 const duracionEnMilisegundos = (parseInt(horasDuracion) * 60 + parseInt(minutosDuracion)) * 60 * 1000;
 
                 setTimeout(() => {
-                    // Eliminar el título de "EN VIVO" si ya no hay evento actual
+                    // Ocultar el enlace si ya no hay evento actual
                     const nuevoEnVivoAhora = envivos.find(envivo => {
                         if (envivo.fecha === diaActual) {
                             const fin = calcularFinEnVivo(envivo.hora, envivo.duracion);
@@ -709,18 +750,14 @@
                         }
                         return false;
                     });
-                    if (!nuevoEnVivoAhora && enVivoTitulo) {
-                        enVivoTitulo.remove();
+                    if (!nuevoEnVivoAhora) {
+                        enVivoLinkContainer.style.display = 'none';
                     }
                     mostrarProximosEnVivos(proximosEnVivos);
                 }, duracionEnMilisegundos);
 
             } else {
-                // Asegurarse de que el título de "EN VIVO" no esté presente
-                const enVivoTituloExistente = document.getElementById('en-vivo-titulo');
-                if (enVivoTituloExistente) {
-                    enVivoTituloExistente.remove();
-                }
+                enVivoLinkContainer.style.display = 'none'; // Ocultar el enlace si no hay en vivo
 
                 if (proximosOrdenados.length > 0) {
                     proximoEnVivo = proximosOrdenados[0];
@@ -765,6 +802,59 @@
             );
             mostrarProximosEnVivos(envivosFiltrados);
         }
+
+        const proximosEnVivos = [
+            {
+                titulo: "Concierto de Rock en Vivo",
+                fecha: "2025-05-15",
+                hora: "17:30",
+                duracion: "2h 00m",
+                link: "#"
+            },
+            {
+                titulo: "Charla sobre Astronomía",
+                fecha: "2025-05-15",
+                hora: "20:00",
+                duracion: "1h 30m",
+                link: "#"
+            },
+            {
+                titulo: "Sesión de DJ en Directo",
+                fecha: "2025-05-16",
+                hora: "21:00",
+                duracion: "3h 00m",
+                link: "#"
+            },
+            {
+                titulo: "Entrevista con Actor Famoso",
+                fecha: "2025-05-17",
+                hora: "19:00",
+                duracion: "1h 00m",
+                link: "#"
+            },
+            // Nuevos eventos para el 22/05/2025 a las 8:30 PM
+            {
+                titulo: "Estrenos de Películas: Acción",
+                fecha: "2025-05-22",
+                hora: "20:30",
+                duracion: "2h 30m",
+                link: "#"
+            },
+            {
+                titulo: "Estrenos de Películas: Comedia",
+                fecha: "2025-05-22",
+                hora: "20:30",
+                duracion: "2h 00m",
+                link: "#"
+            },
+            {
+                titulo: "Estrenos de Películas: Ciencia Ficción",
+                fecha: "2025-05-22",
+                hora: "20:30",
+                duracion: "2h 15m",
+                link: "#"
+            },
+        ];
 
         setInterval(actualizarHoraActual, 1000);
         mostrarProximosEnVivos(proximosEnVivos);
