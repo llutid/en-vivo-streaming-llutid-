@@ -425,7 +425,17 @@
                 font-size: 0.9rem;
             }
 
-            .live-info-container #hora-actual1.8rem;
+            .live-info-container #hora-actual {
+                font-size: 1.1rem;
+            }
+
+            .cronograma-envivos-container {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .cronograma-envivos-container h2 {
+                font-size: 1.8rem;
                 margin-bottom: 10px;
             }
 
@@ -475,8 +485,7 @@
             }
 
             .video-header {
-                max-height: 250px;
-                margin-bottom: 15px;
+                max-height: 250px;margin-bottom: 15px;
             }
 
             .en-vivo-link-container {
@@ -621,28 +630,6 @@
                 duracion: "1h 00m",
                 link: "#"
             },
-            // Nuevos eventos para el 22/05/2025 a las 8:30 PM
-            {
-                titulo: "Estrenos de Películas: Acción",
-                fecha: "2025-05-22",
-                hora: "20:30",
-                duracion: "2h 30m",
-                link: "#"
-            },
-            {
-                titulo: "Estrenos de Películas: Comedia",
-                fecha: "2025-05-22",
-                hora: "20:30",
-                duracion: "2h 00m",
-                link: "#"
-            },
-            {
-                titulo: "Estrenos de Películas: Ciencia Ficción",
-                fecha: "2025-05-22",
-                hora: "20:30",
-                duracion: "2h 15m",
-                link: "#"
-            },
         ];
 
         function mostrarHoraAmPm(hora24) {
@@ -692,10 +679,6 @@
             const listaEnVivos = document.getElementById('proximos-envivos-list');
             listaEnVivos.innerHTML = '';
             const enVivoLinkContainer = document.getElementById('enVivoLinkContainer');
-            const enVivoLinkURL = "https://www.youtube.com/watch?v=hct5qjC_n9M"; // Nuevo enlace del en vivo
-
-            // Actualizar el href del enlace del en vivo
-            enVivoLinkContainer.querySelector('.en-vivo-link').href = enVivoLinkURL;
 
             const ahora = new Date();
             const diaActual = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`;
@@ -802,59 +785,6 @@
             );
             mostrarProximosEnVivos(envivosFiltrados);
         }
-
-        const proximosEnVivos = [
-            {
-                titulo: "Concierto de Rock en Vivo",
-                fecha: "2025-05-15",
-                hora: "17:30",
-                duracion: "2h 00m",
-                link: "#"
-            },
-            {
-                titulo: "Charla sobre Astronomía",
-                fecha: "2025-05-15",
-                hora: "20:00",
-                duracion: "1h 30m",
-                link: "#"
-            },
-            {
-                titulo: "Sesión de DJ en Directo",
-                fecha: "2025-05-16",
-                hora: "21:00",
-                duracion: "3h 00m",
-                link: "#"
-            },
-            {
-                titulo: "Entrevista con Actor Famoso",
-                fecha: "2025-05-17",
-                hora: "19:00",
-                duracion: "1h 00m",
-                link: "#"
-            },
-            // Nuevos eventos para el 22/05/2025 a las 8:30 PM
-            {
-                titulo: "Estrenos de Películas: Acción",
-                fecha: "2025-05-22",
-                hora: "20:30",
-                duracion: "2h 30m",
-                link: "#"
-            },
-            {
-                titulo: "Estrenos de Películas: Comedia",
-                fecha: "2025-05-22",
-                hora: "20:30",
-                duracion: "2h 00m",
-                link: "#"
-            },
-            {
-                titulo: "Estrenos de Películas: Ciencia Ficción",
-                fecha: "2025-05-22",
-                hora: "20:30",
-                duracion: "2h 15m",
-                link: "#"
-            },
-        ];
 
         setInterval(actualizarHoraActual, 1000);
         mostrarProximosEnVivos(proximosEnVivos);
